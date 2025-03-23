@@ -1,73 +1,26 @@
 # Brent Price (TRY) and CPI (TUFE) Analysis
 
-## Overview
+Overview: This project performs an analysis of the relationship between Brent oil prices (converted to TRY) and the Turkish Consumer Price Index (TUFE) using time series econometrics and forecasting models. The focus is on uncovering meaningful relationships using Correlation Analysis, Augmented Dickey-Fuller (ADF) Tests for stationarity, Granger Causality Tests for directional influence, and Prophet Forecasting for 24-month projections. The study compares both USD-based and TRY-based Brent price calculations, highlighting the importance of exchange rate effects on CPI dynamics in Turkey.
 
-This project performs an analysis of the relationship between Brent oil prices (converted to TRY) and the Turkish Consumer Price Index (TUFE) using time series forecasting models. The primary tools used for this analysis are **Prophet**, **ADF Tests**, and **Granger Causality Tests**.
+Data: The data is stored in BRENT_TUFE_DATA.xlsx and contains: Date (monthly), BRENT PRICE (USD), USDTRY (exchange rate), and TUFE (CPI). TRY-based Brent prices are calculated as:  
+BRENT_PRICE_TRY = BRENT PRICE (USD) * (USDTRY / 10000)
 
-The analysis aims to provide insights into how Brent oil prices and CPI interact over time and to forecast future trends for both variables.
+Libraries Used: pandas, matplotlib.pyplot, seaborn, statsmodels, prophet, and openpyxl.
 
----
+Steps in the Analysis:
+1. Data Loading and Preparation – Load the dataset, convert Date to datetime, set Date as index, and calculate Brent Price in TRY.
+2. Correlation Analysis – Compare Brent Price (USD) vs. TUFE (weak correlation) and Brent Price (TRY) vs. TUFE (strong correlation, ~0.967).
+3. Stationarity Check – Run ADF tests on raw, first-differenced, and second-differenced series; TUFE requires second differencing while Brent (TRY) requires first differencing.
+4. Granger Causality Test – Conduct tests with lags 1–4; significant causality is detected at lag 4 (p < 0.05).
+5. Forecasting – Use Prophet to forecast both TUFE and Brent Price (TRY) for 24 months (Jan 2025 – Dec 2026) with 80% confidence intervals.
 
-## Data
+Outputs:
+- Correlation: USD-based Brent price shows no meaningful correlation with TUFE, while TRY-based Brent price shows a strong positive correlation (~0.967).
+- ADF Tests: Both TUFE and Brent (TRY) are non-stationary initially; stationarity is achieved after appropriate differencing.
+- Granger Causality: Lag 4 indicates that Brent Price (TRY) Granger-causes TUFE (p = 0.0434).
+- Forecasts: Both series exhibit upward trends in the forecast period. Example predictions include:
+   - **Brent Price (TRY):** 2025-01-31: 3019.97 (CI: 2873.17 – 3174.72), 2025-12-31: 3160.67 (CI: 2974.00 – 3377.18)
+   - **TUFE:** 2025-01-31: 2446.82 (CI: 2330.39 – 2556.73), 2025-12-31: 2719.44 (CI: 2547.83 – 2883.27)
+- Visualizations: Time series plots, stationarity checks (raw vs. differenced data), a correlation heatmap, a Granger causality p-value bar chart, and forecast plots are included in the analysis.
 
-The data used in this project is from the **BRENT_TUFE_DATA.xlsx** file. This file contains historical data for:
-
-- **BRENT PRICE (USD)**: The price of Brent crude oil in USD.
-- **USDTRY**: The exchange rate between USD and Turkish Lira (TRY).
-- **TUFE**: The Turkish Consumer Price Index (CPI).
-- **Date**: Timestamps for each observation.
----
-
-## Libraries Used
-
-The following libraries are required to run the project:
-
-- `pandas`: For data manipulation and analysis.
-- `matplotlib.pyplot`: For visualizing data.
-- `statsmodels`: For performing statistical tests like ADF and Granger Causality.
-- `prophet`: For time series forecasting.
-- `seaborn`: For creating correlation heatmaps.
-
----
-
-## Steps in the Analysis
-
-### 1. **Data Loading and Preparation**
-- Loaded the `BRENT_TUFE_DATA.xlsx` file.
-- Converted the **Date** column to datetime format.
-- Calculated **Brent Price (TRY)** dynamically.
-
-### 2. **Correlation Analysis**
-- Correlation between **Brent Price (TRY)** and **TUFE**.
-
-### 3. **Stationarity Check**
-- Used Augmented Dickey-Fuller (ADF) test to check for stationarity.
-- Applied first and second differencing to achieve stationarity.
-
-### 4. **Granger Causality Test**
-- Examined the causal relationship between Brent Price (TRY) and TUFE.
-
-### 5. **Forecasting**
-- Used Prophet to forecast **Brent Price (TRY)** and **TUFE** for the next 12 months.
-- Visualized forecast results with confidence intervals.
-
----
-
-## Outputs
-
-### 1. Correlation
-- Displays the correlation coefficient between Brent Price (TRY) and TUFE.
-
-### 2. ADF Test Results
-- Determines if the series is stationary. Outputs for both raw and differenced data.
-
-### 3. Granger Causality
-- Tests whether changes in Brent Price (TRY) can predict TUFE (or vice versa).
-
-### 4. Forecasts
-- 12-month forecasts for both Brent Price (TRY) and TUFE, with confidence intervals.
-
-### 5. Visualizations
-- Time series plots for Brent Price (TRY) and TUFE.
-- Stationarity visualizations with differencing.
-- Forecast plots.
+Author: Emre Kara | GitHub: [0xemrekara](https://github.com/0xemrekara) | Email: karaemre@proton.me
